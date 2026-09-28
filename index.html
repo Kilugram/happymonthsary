@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>happy 25th, baby :>></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Dancing+Script:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <style>
+    /* Base page layout: preserves starry background & enables clean scrolling */
+    html, body {
+        min-height: 100vh;
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background: linear-gradient(135deg, #1a0b2e 0%, #4a154b 100%);
+        color: white;
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* Screen containers fix: aligns tall letters from the top so titles never get cut off */
+    div[id*="screen"], .screen, body > div {
+        min-height: 100vh !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        padding-top: 40px !important;
+        padding-bottom: 80px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Floating animation for the gift and envelope */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0px); }
+    }
+    .animate-float {
+        animation: float 3s ease-in-out infinite;
+    }
+
+    /* Heartbeat animation for hover effects */
+    @keyframes heartbeat {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+    .hover-heartbeat:hover {
+        animation: heartbeat 1s ease-in-out infinite;
+    }
+
+    /* Fade transitions */
+    .fade-transition {
+        transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+    }
+    .fade-out {
+        opacity: 0;
+        transform: scale(0.9);
+        pointer-events: none;
+    }
+    .fade-in {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* Medieval Scroll Styling Container */
+    .parchment-container {
+        position: relative !important;
+        width: 100%;
+        max-width: 650px;
+        margin: 20px auto 60px auto !important;
+        top: 0 !important;
+        transform: none !important;
+        filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5));
+    }
+
+    /* Scroll Paper (grows naturally with your paragraphs) */
+    .parchment {
+        /* Classic parchment paper colors and textures */
+        background-color: #f4e4bc;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+        box-shadow: inset 0 0 50px rgba(139, 90, 43, 0.4), inset 0 0 20px rgba(139, 90, 43, 0.3);
+        border-radius: 4px;
+        padding: 3rem 2rem 4rem 2rem;
+        color: #3e2723;
+        /* Inner shadow to mimic rolled edges */
+        border-left: 2px solid rgba(139, 90, 43, 0.2);
+        border-right: 2px solid rgba(139, 90, 43, 0.2);
+
+        min-height: auto; 
+        height: auto; 
+        overflow: visible;
+    }
+
+    /* Pseudo-elements to look like scroll rollers */
+    .parchment-container::before, .parchment-container::after {
+        content: '';
+        display: block;
+        height: 25px;
+        background: linear-gradient(to bottom, #8b5a2b, #5c3a21, #8b5a2b);
+        border-radius: 12px;
+        width: 104%;
+        margin-left: -2%;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.2);
+        position: relative;
+        z-index: 10;
+    }
+
+    /* Typography for the letter */
+    .medieval-title {
+        font-family: 'Great Vibes', cursive;
+        color: #5c3a21;
+        font-size: 3rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px dashed #bca78b;
+        padding-bottom: 1rem;
+    }
+
+    .medieval-text {
+        font-family: 'Cinzel', serif;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #3e2723;
+    }
+
+    .medieval-signature {
+        font-family: 'Dancing Script', cursive;
+        font-size: 2rem;
+        color: #5c3a21;
+        margin-top: 2rem;
+        text-align: right;
+    }
+
+    /* Custom glow for the sign */
+    .neon-sign {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 15px rgba(255, 182, 255, 0.4);
+    }
+</style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center relative">
+
+    <!-- 
+        AUDIO SETUP: 
+        Insert your direct audio file URLs inside the src="" below. 
+        Example: src="https://example.com/music1.mp3"
+    -->
+    <!-- Music 1: Plays when the gift is clicked (transitions to envelope) -->
+    <audio id="music-start" src="Route 101 - Pokémon Ruby Sapphire Emerald Soundtrack.mp3" preload="auto"></audio>
+    
+    <!-- Music 2: Plays when the envelope is clicked (transitions to the medieval letter) -->
+    <audio id="music-letter" src="Littleroot Town - Pokémon Ruby Sapphire Emerald Soundtrack.mp3" preload="auto"></audio>
+
+    <!-- STATE 1: GIFT BOX -->
+    <div id="stage-1" class="absolute w-full h-full flex flex-col items-center justify-center fade-transition">
+        
+        <div class="animate-float cursor-pointer hover-heartbeat" onclick="openGift()">
+            <!-- CSS/SVG Art for Present -->
+            <svg width="200" height="200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-2xl">
+                <!-- Ribbon loops -->
+                <path d="M12 9C12 9 8.5 2 5.5 2C3.5 2 2 3.5 2 5.5C2 8.5 12 9 12 9Z" fill="#FF4D6D"/>
+                <path d="M12 9C12 9 15.5 2 18.5 2C20.5 2 22 3.5 22 5.5C22 8.5 12 9 12 9Z" fill="#FF4D6D"/>
+                <!-- Box Top -->
+                <rect x="3" y="9" width="18" height="4" rx="1" fill="#FF8FA3"/>
+                <!-- Box Bottom -->
+                <rect x="4" y="13" width="16" height="9" rx="1" fill="#FFAFCC"/>
+                <!-- Vertical Ribbon -->
+                <rect x="10.5" y="9" width="3" height="13" fill="#FF4D6D"/>
+            </svg>
+        </div>
+        
+        <!-- The Sign -->
+        <div class="mt-8 neon-sign rounded-2xl px-8 py-4 text-center cursor-pointer hover-heartbeat" onclick="openGift()">
+            <p class="text-2xl font-bold tracking-wider" style="font-family: 'Dancing Script', cursive;">
+                Click me -blu ;P
+            </p>
+        </div>
+    </div>
+
+    <!-- STATE 2: ENVELOPE -->
+    <div id="stage-2" class="absolute w-full h-full flex flex-col items-center justify-center fade-transition fade-out hidden">
+        <div class="animate-float cursor-pointer hover-heartbeat group" onclick="openEnvelope()">
+            <!-- SVG Art for Envelope -->
+            <svg width="220" height="180" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-2xl">
+                <!-- Back of envelope -->
+                <rect x="2" y="4" width="20" height="16" rx="2" fill="#E2E8F0"/>
+                <!-- Flap (Closed) -->
+                <path d="M2 4L12 13L22 4" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 20L10 12" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M22 20L14 12" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Red Wax Seal -->
+                <circle cx="12" cy="13" r="3" fill="#C1121F" class="group-hover:scale-110 transition-transform"/>
+                <path d="M12 11.5C12.8 11.5 13.5 12.2 13.5 13" stroke="#780000" stroke-width="0.5"/>
+            </svg>
+            <p class="text-center mt-6 text-xl font-light italic text-pink-200 opacity-80 group-hover:opacity-100 transition-opacity">
+                Je t'aime, Mon amour
+            </p>
+        </div>
+    </div>
+
+    <!-- STATE 3: MEDIEVAL SCROLL -->
+    <div id="stage-3" class="absolute w-full min-h-screen flex flex-col items-center justify-center fade-transition fade-out hidden p-4 py-12 overflow-y-auto">
+        <div class="parchment-container animate-float" style="animation-duration: 6s; animation-name: gentleFloat;">
+            <div class="parchment">
+                <h1 class="medieval-title">Happiest 25th, mi bebi!</h1>
+                
+                <div class="medieval-text space-y-4 text-justify">
+                    <!-- PLACEHOLDER FOR YOUR LONG MESSAGE -->
+                    <p>
+                        HAPPIESTTTTTTT 25TH MONTHSARY TO US, BEBIII!! I hope na surprise kita sa gift ko this month :PP hehehehe I told u hindi pa eyun ung last na website na matatanggap mo sa akin ;)
+                    </p>
+                    <p>
+                        Eheeem, first of all, ILOVEYOU. I know na lagi ko po 'to sinasabi sa 'yo, pero kahit kailan baby e hinding hindi po magiging enough ang words ko para ma-express ang pagmamahal ko sau. I really KENUTTT believe na it's our TWENTIPAYB'ed NA. Parang kahapon lang e dinidiskartehan pa kita sa SCA room natin :P
+                    </p>
+                    <p>
+                        I just wanna say na I am very very very grateful po for you. I'm thankful because through all misunderstandings we had along the way, nananatili tayong dalawa dito, nagmamahalan.
+                    </p>
+                    <p>
+                        Thank you for always being there for me. Thank you for always being my happy pill sa mga times na hindi ako okay. Thank you for being the reason kung bakit ako nagsisikap sa buhay. And thank you kasi dahil sa inyo po, guminhawa po ang lahat.
+                    </p>
+                    <p>
+                        Hindi k na sya  hahabaan or kokornihan,,, hehehehe sa pm q nalang papakita pagiging corni ko senyo bebe >:P hehehehehehehe
+                    </p>
+                    <p>
+                        Forever and always,
+                    </p>
+                    <!-- END OF MESSAGE PLACEHOLDER -->
+                </div>
+
+                <div class="medieval-signature">
+                    - beby boy blu
+                </div>
+            </div>
+        </div>
+        
+        <style>
+            @keyframes gentleFloat {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-5px); }
+                100% { transform: translateY(0px); }
+            }
+        </style>
+    </div>
+
+    <script>
+        // Get references to elements
+        const stage1 = document.getElementById('stage-1');
+        const stage2 = document.getElementById('stage-2');
+        const stage3 = document.getElementById('stage-3');
+        
+        const musicStart = document.getElementById('music-start');
+        const musicLetter = document.getElementById('music-letter');
+
+        // Optional: Volume control
+        musicStart.volume = 0.5;
+        musicLetter.volume = 0.5;
+
+        // Transition from Gift to Envelope
+        function openGift() {
+            // Start the first background music (requires user interaction, which just happened via click)
+            if(musicStart.src && musicStart.src !== window.location.href) {
+                musicStart.play().catch(e => console.log("Audio play failed:", e));
+            }
+
+            // Fade out stage 1
+            stage1.classList.add('fade-out');
+            
+            // Wait for fade out, then hide stage 1 and show stage 2
+            setTimeout(() => {
+                stage1.classList.add('hidden');
+                
+                stage2.classList.remove('hidden');
+                // Small delay to ensure display block is registered before applying opacity transition
+                requestAnimationFrame(() => {
+                    stage2.classList.remove('fade-out');
+                    stage2.classList.add('fade-in');
+                });
+            }, 800);
+        }
+
+        // Transition from Envelope to Medieval Letter
+        function openEnvelope() {
+            // Pause first music, play second music
+            if(!musicStart.paused) {
+                musicStart.pause();
+            }
+            if(musicLetter.src && musicLetter.src !== window.location.href) {
+                musicLetter.play().catch(e => console.log("Audio play failed:", e));
+            }
+
+            // Fade out stage 2
+            stage2.classList.remove('fade-in');
+            stage2.classList.add('fade-out');
+
+            // Wait for fade out, then hide stage 2 and show stage 3 (the letter)
+            setTimeout(() => {
+                stage2.classList.add('hidden');
+                
+                stage3.classList.remove('hidden');
+                // Ensure browser paints display block before fading in
+                requestAnimationFrame(() => {
+                    stage3.classList.remove('fade-out');
+                    stage3.classList.add('fade-in');
+                });
+            }, 800);
+        }
+    </script>
+</body>
+</html>
